@@ -2,6 +2,7 @@
 	"files.associations": {
 		"stdlib.h": "c",
 		"refile.h": "c",
-		"vector": "c"
+		"vector": "c",
+		"errno.h": "c"
 	}
 }

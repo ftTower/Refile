@@ -4,18 +4,25 @@ LIBNAME = librefile.a
 
 # Compilateur et options de compilation
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror -I./include
+CFLAGS = -Wall -Wextra -Werror -I./include -g3
 
 # Répertoires
 SRCDIR = ./src
+UTILSDIR = $(SRCDIR)/utils
 TFILEDIR = $(SRCDIR)/t_file
+GNLDIR = $(UTILSDIR)/get_next_line
 CONTENTDIR = $(SRCDIR)/content
 INCDIR = ./include
 BUILDDIR = ./build
 
 # Fichiers source et objet
-SRC = $(SRCDIR)/main.c $(TFILEDIR)/file_print.c $(TFILEDIR)/file_display.c $(CONTENTDIR)/content_create.c
+SRC = $(SRCDIR)/main.c $(GNLDIR)/get_next_line.c \
+      $(TFILEDIR)/file_create.c \
+      $(TFILEDIR)/file_print.c $(TFILEDIR)/file_display.c \
+      $(CONTENTDIR)/content_create.c 
 LIB_SRC = $(SRCDIR)/refile.c        # Source pour la librairie
+
+# Fichiers objets pour l'exécutable et la librairie
 OBJ = $(patsubst $(SRCDIR)/%.c,$(BUILDDIR)/%.o,$(SRC))
 LIB_OBJ = $(patsubst $(SRCDIR)/%.c,$(BUILDDIR)/%.o,$(LIB_SRC))
 
@@ -40,14 +47,10 @@ $(LIBNAME): $(LIB_OBJ)
 	@echo "$(COLOR_GREEN)✔ $(LIBNAME) created.$(COLOR_RESET)"
 
 # Compilation des fichiers .o et création du dossier build s'il n'existe pas
-$(BUILDDIR)/%.o: $(SRCDIR)/%.c | $(BUILDDIR) $(dir $@)
-	@mkdir -p $(dir $@)  # Créer le répertoire de destination
+$(BUILDDIR)/%.o: $(SRCDIR)/%.c
+	@mkdir -p $(dir $@)  # Créer le répertoire de destination si nécessaire
 	@echo "$(COLOR_BLUE)[Compiling]$(COLOR_RESET) $<"
 	@$(CC) $(CFLAGS) -c $< -o $@
-
-# Création du dossier build
-$(BUILDDIR):
-	@mkdir -p $(BUILDDIR)
 
 # Règle pour nettoyer les fichiers objets et le dossier build
 clean:

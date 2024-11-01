@@ -47,19 +47,36 @@ void	file_print_name(t_file file)
 	printf("📄 %s%s%s",colors[4] ,file.name, colors[32]);
 }
 
-void	file_print_content(t_file file)
+void    putstr_line(char *line)
 {
-	printf(" ╚═══════📁 %scontent%s\n", colors[3], colors[32]);
-	printf("\t  ╠════[%scapacity : %s%zu]\n", colors[2], colors[32],file.content->capacity);
-	printf("\t  ╠════[%ssize     : %s%zu]\n", colors[1],  colors[32], file.content->size);
-	
-	for (size_t i = 0; i < file.content->size; i++)
-    {	
-		if (i == 0 )
-			printf("\t  ╠════%s %-3zu%s%s%s%s\n", colors[27],i + 1, colors[32],colors[13], file.content->lines[i], colors[32]);
-		else
-			printf("\t       %s %-3zu%s%s%s%s\n", colors[27],i + 1, colors[32],colors[13], file.content->lines[i], colors[32]);
-	}
+    ssize_t i;
+
+    i = -1;
+    write(1, "\t> ", 3);
+    while(line[++i])
+    {
+        if (line[i] != '\n')
+            write(1, &line[i], 1);
+    }
+    write(1, "\n", 1);
+}
+
+void	file_print_content(t_file file, ssize_t size)
+{
+    if (file.content == NULL) {
+        return ( printf("📁 %scontent is empty%s\n", colors[3], colors[32]), (void)NULL);
+    }
+    printf("📁 %slines%s", colors[3], colors[32]);
+    printf("[%s%zu%s/%s%zu%s]", colors[4], file.content->capacity,colors[32], colors[2], file.content->capacity,colors[32]);
+    if (size <= 0)
+        return (printf("\n"), (void)NULL);
+    if (file.content->lines == NULL) {
+        return (printf(" %s lines is NULL%s\n", colors[27], colors[32]), (void)NULL);
+    }
+    printf("\n");
+    for (size_t i = 0; i < file.content->size && i < (size_t)size; i++)
+        putstr_line(file.content->lines[i]);
+        // printf(" %s %-3zu%s%s%s%s\n", colors[27], i + 1, colors[32], colors[13], file.content->lines[i], colors[32]);
 }
 
 void	file_print_path()
