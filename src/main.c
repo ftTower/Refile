@@ -14,8 +14,7 @@ int	main(void)
 	t_file *file, *file2;
 
 	file = get_file("test.txt", "/home/tower/Refile/test.txt", O_RDONLY);
-	// file2 = get_file("test copy.txt", "/home/tower/Refile/test copy.txt", O_RDONLY);
-	file2 = create_file();
+	file2 = get_file("test copy.txt", "/home/tower/Refile/test copy.txt", O_RDONLY);
 
 	display_file(file, DISPLAY_LIGHT);
 	display_file(file2, DISPLAY_LIGHT);
