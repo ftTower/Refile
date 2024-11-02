@@ -7,7 +7,7 @@ t_file *create_file(void)
 	file = malloc(sizeof(t_file));
 	if (!file)
 		return (NULL);
-	file->name = NULL;
+	file->name = " default";
 	file->content = NULL;
 	file->path = NULL;
 	file->permissions = -1;
@@ -43,12 +43,13 @@ int		open_file(char *path, int permissions)
 t_file *get_file(char *name, char *path, int permissions)
 {
 	t_file *file = create_file();
-	if (!file)
-		return (NULL);
+	if (!file || !path)
+		return (free(file), NULL);
 	file->fd = open_file(path, permissions);
 	file->is_open = true;
 	file->content = get_vector_content(file->fd);
-	file->name = name;
+	if (name)
+		file->name = name;
 	file->path = path;
 	file->permissions = permissions;
 	//file->creation = 
@@ -59,6 +60,8 @@ t_file *get_file(char *name, char *path, int permissions)
 
 void	free_file(t_file *file)
 {
-	free_vector_content(file->content);
-	free(file);
+	if (file){
+		free_vector_content(file->content);
+		free(file);
+	}
 }

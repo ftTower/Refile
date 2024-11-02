@@ -56,22 +56,20 @@ void	put_load_bar(size_t size, size_t v1, size_t v2)
     double ratio = (double)v1 / (double)v2 * size;
 
     for (size_t i = 0; i < (size_t)ratio; i++)
-        printf("%s%s%s", colors[25], "[]", colors[32]);
+        printf("%s%s%s", colors[17], " |", colors[32]);
     for(size_t i = ratio; i < size; i++)
-        printf("%s%s%s", colors[24], "[]", colors[32]);
+        printf("%s%s%s", colors[18], " |", colors[32]);
 }
 
 void	file_print_content(t_file file, ssize_t size)
 {
     if (file.content == NULL) {
-        return ( printf("📁 %scontent is empty%s\n", colors[3], colors[32]), (void)NULL);
+        return (printf("%s 📁 %s", colors[28], colors[32]), put_load_bar(8, 0, 10), printf(" %s0    %s/%s0%s", colors[9], colors[32], colors[6],colors[32]),(void)NULL);
     }
 	printf("%s 📁 %s", colors[28], colors[32]);
 	put_load_bar(8, file.content->size, file.content->capacity);
-    if (file.content->size == file.content->max_capacity)
-        printf(" %s%-5zu%s/%s%-5zu%s", colors[9], file.content->size,colors[32], colors[9], file.content->capacity,colors[32]);
-    else
-        printf(" %s%-5zu%s/%s%-5zu%s", colors[6], file.content->size,colors[32], colors[9], file.content->capacity,colors[32]);
+       
+    printf(" %s%-5zu%s/%s%-5zu%s", colors[9], file.content->size,colors[32], colors[6], file.content->capacity,colors[32]);
     if (size < 0)
         return (printf("\n"), (void)NULL);
     if (file.content->lines == NULL) {

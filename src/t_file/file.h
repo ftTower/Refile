@@ -10,7 +10,7 @@ void				file_print_content(t_file file, ssize_t size);
 void				file_print_path(t_file file, size_t size);
 void				put_load_bar(size_t size, size_t v1, size_t v2);
 
-void				display_file(t_file file, t_display_lvl level);
+void				display_file(t_file *file, t_display_lvl level);
 
 
 #endif
