@@ -19,7 +19,7 @@ BUILDDIR = ./build
 SRC = $(SRCDIR)/main.c $(GNLDIR)/get_next_line.c \
       $(TFILEDIR)/file_create.c \
       $(TFILEDIR)/file_print.c $(TFILEDIR)/file_display.c \
-      $(CONTENTDIR)/content_create.c 
+      $(CONTENTDIR)/content_create.c $(UTILSDIR)/utils_print.c
 LIB_SRC = $(SRCDIR)/refile.c        # Source pour la librairie
 
 # Fichiers objets pour l'exécutable et la librairie

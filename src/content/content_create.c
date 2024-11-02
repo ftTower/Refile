@@ -2,7 +2,7 @@
 
 t_vector_content *get_vector_content(int fd)
 {
-	t_vector_content *vector = create_vector_content(1, 1000);
+	t_vector_content *vector = create_vector_content(1, 20000);
 	if (!vector)
 		return (NULL);
 	char *buf;
@@ -40,11 +40,8 @@ bool	add_line_to_vector(t_vector_content *vector, const char *line)
 		return (true);
 	if (vector->size >= vector->capacity)
 	{
-		if (vector->size * 2 > vector->max_capacity)
-			vector->capacity = vector->max_capacity;
-		else if (vector->capacity == vector->max_capacity)
+		if (vector->capacity >= vector->max_capacity)
 			return (printf("Vector content is full !\n"),true);
-		printf("upgrade capacity to %ld\n", vector->capacity *2);
 		char **new_lines = realloc(vector->lines, (vector->capacity * 2) * sizeof(char *));
 		if (!new_lines) return (true);
 		vector->lines = new_lines;

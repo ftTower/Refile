@@ -11,13 +11,14 @@
 
 int	main(void)
 {
-	t_file *file;
+	t_file *file, *file2;
 
-	file = get_file("db test", "/home/tower/Refile/test.txt", O_RDONLY);
+	file = get_file("db test 1", "/home/tower/Refile/test.txt", O_RDONLY);
+	file2 = get_file("db test 2", "/home/tower/Refile/test copy.txt", O_RDONLY);
 
 	display_file(*file, DISPLAY_LIGHT);
+	display_file(*file2, DISPLAY_LIGHT);
 
-	free_vector_content(file->content);
-	free(file);
+	free_file(file), free_file(file2);
 	return (0);
 }

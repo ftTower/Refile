@@ -13,8 +13,10 @@
 #include "./refile_types.h"
 
 #include "../src/utils/get_next_line/get_next_line.h"
+#include "../src/utils/utils.h"
 #include "../src/t_file/file.h"
 #include "../src/content/content.h"
+
 
 
 # endif

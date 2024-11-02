@@ -56,3 +56,9 @@ t_file *get_file(char *name, char *path, int permissions)
 	//file->size = 
 	return (file);
 }
+
+void	free_file(t_file *file)
+{
+	free_vector_content(file->content);
+	free(file);
+}

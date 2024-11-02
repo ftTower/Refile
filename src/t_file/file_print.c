@@ -44,21 +44,21 @@ const char *colors[] = {
 
 void	file_print_name(t_file file)
 {
-	printf("📄 %s%s%s",colors[4] ,file.name, colors[32]);
+	printf("%s📄 %s %s",colors[26] ,file.name, colors[32]);
 }
 
-void    putstr_line(char *line)
+void	put_load_bar(size_t size, size_t v1, size_t v2)
 {
-    ssize_t i;
-
-    i = -1;
-    write(1, "\t> ", 3);
-    while(line[++i])
-    {
-        if (line[i] != '\n')
-            write(1, &line[i], 1);
+    if (v2 == 0) {
+        printf("Error: Division by zero\n");
+        return;
     }
-    write(1, "\n", 1);
+    double ratio = (double)v1 / (double)v2 * size;
+
+    for (size_t i = 0; i < (size_t)ratio; i++)
+        printf("%s%s%s", colors[25], "[]", colors[32]);
+    for(size_t i = ratio; i < size; i++)
+        printf("%s%s%s", colors[24], "[]", colors[32]);
 }
 
 void	file_print_content(t_file file, ssize_t size)
@@ -66,22 +66,31 @@ void	file_print_content(t_file file, ssize_t size)
     if (file.content == NULL) {
         return ( printf("📁 %scontent is empty%s\n", colors[3], colors[32]), (void)NULL);
     }
-    printf("📁 %slines%s", colors[3], colors[32]);
-    printf("[%s%zu%s/%s%zu%s]", colors[4], file.content->capacity,colors[32], colors[2], file.content->capacity,colors[32]);
-    if (size <= 0)
+	printf("%s 📁 %s", colors[28], colors[32]);
+	put_load_bar(8, file.content->size, file.content->capacity);
+    if (file.content->size == file.content->max_capacity)
+        printf(" %s%-5zu%s/%s%-5zu%s", colors[9], file.content->size,colors[32], colors[9], file.content->capacity,colors[32]);
+    else
+        printf(" %s%-5zu%s/%s%-5zu%s", colors[6], file.content->size,colors[32], colors[9], file.content->capacity,colors[32]);
+    if (size < 0)
         return (printf("\n"), (void)NULL);
     if (file.content->lines == NULL) {
         return (printf(" %s lines is NULL%s\n", colors[27], colors[32]), (void)NULL);
     }
-    printf("\n");
-    for (size_t i = 0; i < file.content->size && i < (size_t)size; i++)
-        putstr_line(file.content->lines[i]);
-        // printf(" %s %-3zu%s%s%s%s\n", colors[27], i + 1, colors[32], colors[13], file.content->lines[i], colors[32]);
+    // printf("\n");
+    // for (size_t i = 0; i < file.content->size && i < (size_t)size; i++)
+    //     putstr_fd(file.content->lines[i], 0);  
 }
 
-void	file_print_path()
+void	file_print_path(t_file file, size_t size)
 {
-
+    if (!file.path || size <= 0)
+        return ;
+    size_t size_cmp = strlen(file.path);
+    if (size_cmp <= size)
+        printf("%s %s %s", colors[27],file.path, colors[32]);
+    else
+        printf("%s %s %s",colors[27], file.path + (size_cmp - size), colors[32]);
 }
 
 void	file_print_permissions()
