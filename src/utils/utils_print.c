@@ -1,4 +1,3 @@
-
 #include <unistd.h>
 
 void    putstr_fd(char *line, int fd)
@@ -14,4 +13,3 @@ void    putstr_fd(char *line, int fd)
     }
     // write(fd, "\n", 1);
 }
-

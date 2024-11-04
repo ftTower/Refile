@@ -42,21 +42,18 @@ const char *colors[] = {
     "\033[0m"   // Reset
 };
 
-void    print_format(char *line, size_t size, int color)
+void    print_format(char *line, int color)
 {
     if (color < 0 || color > 32)
         return ;
-    size_t size_cmp = strlen(line);
-    if (size_cmp <= size)
-        printf("%s %s %s", colors[color],line, colors[32]);
-    else
-        printf("%s %s %s",colors[color], line + (size_cmp - size + 2), colors[32]);
+    printf("%s %s %s", colors[color],line, colors[32]);
+
 }
 
 void	file_print_name(t_file file)
 {
 	printf("%s📄%s", colors[27], colors[32]);
-    print_format(file.name, 10, 27);
+    print_format(file.name, 27);
 }
 
 void	put_load_bar(size_t size, size_t v1, size_t v2)
@@ -66,7 +63,6 @@ void	put_load_bar(size_t size, size_t v1, size_t v2)
         return;
     }
     double ratio = (double)v1 / (double)v2 * size;
-
     for (size_t i = 0; i < (size_t)ratio; i++)
         printf("%s%s%s", colors[17], " |", colors[32]);
     for(size_t i = ratio; i < size; i++)

@@ -2,7 +2,7 @@
 # define FILE_H
 
 t_file 				*create_file(void);
-t_file 				*get_file(char *name, char *path, int permissions);
+t_file 				*get_file(char *path, int permissions);
 void				free_file(t_file *file);
 
 void				file_print_name(t_file file);

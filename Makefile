@@ -11,15 +11,18 @@ SRCDIR = ./src
 UTILSDIR = $(SRCDIR)/utils
 TFILEDIR = $(SRCDIR)/t_file
 GNLDIR = $(UTILSDIR)/get_next_line
+STRINGFUNC = $(UTILSDIR)/string_func
 CONTENTDIR = $(SRCDIR)/content
 INCDIR = ./include
 BUILDDIR = ./build
 
 # Fichiers source et objet
 SRC = $(SRCDIR)/main.c $(GNLDIR)/get_next_line.c \
-      $(TFILEDIR)/file_create.c \
-      $(TFILEDIR)/file_print.c $(TFILEDIR)/file_display.c \
-      $(CONTENTDIR)/content_create.c $(UTILSDIR)/utils_print.c
+      $(TFILEDIR)/file_create.c $(TFILEDIR)/file_print.c $(TFILEDIR)/file_display.c \
+      $(CONTENTDIR)/content_create.c\
+	  $(UTILSDIR)/utils_print.c \
+	  $(STRINGFUNC)/split.c $(STRINGFUNC)/strdup.c
+ 
 LIB_SRC = $(SRCDIR)/refile.c        # Source pour la librairie
 
 # Fichiers objets pour l'exécutable et la librairie

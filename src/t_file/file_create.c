@@ -7,7 +7,7 @@ t_file *create_file(void)
 	file = malloc(sizeof(t_file));
 	if (!file)
 		return (NULL);
-	file->name = " default";
+	file->name = NULL;
 	file->content = NULL;
 	file->path = NULL;
 	file->permissions = -1;
@@ -40,17 +40,40 @@ int		open_file(char *path, int permissions)
 	return (fd);
 }
 
-t_file *get_file(char *name, char *path, int permissions)
+void	free_tab(char **buf)
+{
+	if (!buf)
+		return ;
+	for(size_t i = 0; buf[i]; i++)
+		free(buf[i]);
+	free(buf);
+}
+
+char   *get_name(char *path)
+{
+	char **buf = ft_split(path, "/");
+	if (!buf || !*buf)
+		return (free_tab(buf), NULL);
+	ssize_t i = 0;
+	while (buf[++i])
+		;
+	char *ret = ft_strdup(buf[--i]);
+	return (free_tab(buf),  ret);
+}
+
+t_file *get_file(char *path, int permissions)
 {
 	t_file *file = create_file();
 	if (!file || !path)
 		return (free(file), NULL);
 	file->fd = open_file(path, permissions);
+	if (file->fd == -1)
+		return (free(file), NULL);
 	file->is_open = true;
+	file->name = get_name(path);
+	file->path = ft_strdup(path);
 	file->content = get_vector_content(file->fd);
-	if (name)
-		file->name = name;
-	file->path = path;
+
 	file->permissions = permissions;
 	//file->creation = 
 	//file->modification_time = 
@@ -61,7 +84,11 @@ t_file *get_file(char *name, char *path, int permissions)
 void	free_file(t_file *file)
 {
 	if (file){
+		if (file->is_open)
+			close(file->fd);
 		free_vector_content(file->content);
+		free(file->name);
+		free(file->path);
 		free(file);
 	}
 }
